@@ -19,9 +19,11 @@ const pollBot = (token: string) => {
 }
 
 const webhookBot = (token: string) => {
-  return new TelegramBot(token, {webHook: {
+  const bot = new TelegramBot(token, {webHook: {
     host: '127.0.0.1',
     port: +process.env.TG_PORT,
     autoOpen: true,
   }});
+  bot.setWebHook(process.env.TG_HOST);
+  return bot;
 }
