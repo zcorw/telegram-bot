@@ -27,14 +27,14 @@ const createInstance = () => {
 
 
 export const register = (adminName, adminPassw, userName) => {
-  return createInstance().get('/book/login', {
+  return createInstance().get('/video/login', {
     params: {
       username: adminName,
       password: adminPassw,
     }
   })
     .then(({ data }) => {
-      return instance.get('/book/register', {
+      return instance.get('/video/register', {
         params: {
           token: data.token,
           username: userName,

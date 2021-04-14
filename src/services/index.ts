@@ -38,5 +38,5 @@ const createInstance = () => {
 
 
 export const addUser = (data: UserServiceType) => {
-  return createInstance().post('/user/video', data);
+  return createInstance().post('/add/video', data);
 }
