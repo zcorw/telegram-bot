@@ -24,6 +24,6 @@ const webhookBot = (token: string) => {
     port: +process.env.TG_PORT,
     autoOpen: true,
   }});
-  bot.setWebHook(process.env.TG_HOST);
+  bot.setWebHook(`${process.env.TG_HOST}/${token}`);
   return bot;
 }

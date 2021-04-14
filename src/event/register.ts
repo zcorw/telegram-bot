@@ -63,6 +63,6 @@ const videoSite = async (msg: TelegramBot.Message) => {
 
     return res.data.password;
   } catch (e) {
-    return e;
+    throw e;
   }
 }
