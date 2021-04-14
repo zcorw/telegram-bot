@@ -8,6 +8,7 @@
     "@types/node-telegram-bot-api": "^0.51.1",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
@@ -24,7 +25,8 @@
     "node-telegram-keyboard-wrapper": "^3.0.0"
   },
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "dev": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "start": "cross-env NODE_ENV=production ts-node src/index.ts"
   },
   "types": "src/global.d.ts"
 }
