@@ -13,7 +13,7 @@ instance.interceptors.response.use(
     return res;
   },
   error => {
-    return Promise.reject(new Error(error.response.data));
+    return Promise.reject(new Error(error.response?.data || error.code));
   }
 );
 

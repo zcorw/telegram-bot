@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import siteKeyboard from '../keyboard/chooseSite';
 import { ForceReply } from 'node-telegram-keyboard-wrapper';
-import {UserServiceType} from '../globel';
+import { UserServiceType } from '../globel';
 import { addUser } from '../services';
 import { register } from '../services/register';
 
@@ -17,18 +17,8 @@ export default (bot: TelegramBot) => {
       };
 
       bot.on("callback_query", async (query) => {
-        await bot.answerCallbackQuery(query.id, { text: "Action received!" })
-        const reply = await bot.sendMessage(query.from.id, "请输入一个邮箱作为账号", {
-          reply_markup: ForceReply.getMarkup(),
-        });
-        bot.onReplyToMessage(reply.chat.id, reply.message_id, async (msg) => {
-          try {
-            const password = await videoSite(msg);
-            bot.sendMessage(msg.from.id, `账号已注册，密码为 *${password}*`);
-          } catch(e) {
-            bot.sendMessage(msg.from.id, e.message);
-          }
-        })
+        // await bot.answerCallbackQuery(query.id, { text: "Action received!" })
+        replyMail(query.from.id);
       });
 
       bot.sendMessage(
@@ -41,11 +31,30 @@ export default (bot: TelegramBot) => {
     }
 
   })
+
+  const replyMail = async (chatId: number) => {
+    const reply = await bot.sendMessage(chatId, "请输入一个邮箱作为账号", {
+      reply_markup: ForceReply.getMarkup(),
+    });
+    const listenerId = bot.onReplyToMessage(reply.chat.id, reply.message_id, async (msg) => {
+      try {
+        const password = await videoSite(msg);
+        bot.sendMessage(msg.from.id, `账号已注册，密码为 *${password}*`);
+      } catch (e) {
+        console.log("replyMail -> e", e)
+        await bot.sendMessage(msg.from.id, e.message);
+        replyMail(chatId);
+      }
+      bot.removeReplyListener(listenerId);
+    })
+  }
 }
+
+
 
 const videoSite = async (msg: TelegramBot.Message) => {
   const match = msg.text?.match(/[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+/);
-  const hasMail = !!match[1];
+  const hasMail = !!match;
   try {
     if (!hasMail) {
       throw new Error('账号格式错误，请以邮箱作为账号');
