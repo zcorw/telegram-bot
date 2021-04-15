@@ -39,7 +39,7 @@ export default (bot: TelegramBot) => {
     const listenerId = bot.onReplyToMessage(reply.chat.id, reply.message_id, async (msg) => {
       try {
         const password = await videoSite(msg);
-        bot.sendMessage(msg.from.id, `账号已注册，密码为 *${password}*`);
+        bot.sendMessage(msg.from.id, `账号已注册，密码为 ${password}`);
       } catch (e) {
         console.log("replyMail -> e", e)
         await bot.sendMessage(msg.from.id, e.message);
