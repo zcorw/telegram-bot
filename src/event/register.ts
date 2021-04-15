@@ -65,9 +65,9 @@ const videoSite = async (msg: TelegramBot.Message) => {
       username: msg.from.username,
       tgId: msg.from.id,
       chatId: msg.message_id,
-      mail: match[1],
+      mail: match[0],
     };
-    const res = await register(process.env.EMBY_ADMIN, process.env.EMBY_PASSWORD, match[1]);
+    const res = await register(process.env.EMBY_ADMIN, process.env.EMBY_PASSWORD, match[0]);
     await addUser(user);
 
     return res.data.password;
