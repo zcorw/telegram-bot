@@ -1,5 +1,5 @@
 import { UserServiceType } from '@/globel';
-import axios, {AxiosResponse, AxiosInstance} from 'axios';
+import axios, { AxiosResponse, AxiosInstance } from 'axios';
 
 let instance: AxiosInstance;
 const createInstance = () => {
@@ -13,7 +13,7 @@ const createInstance = () => {
       port: 8888,
     } : undefined,
   })
-  
+
   instance.interceptors.response.use(
     (res: AxiosResponse<any>) => {
       const {
@@ -37,6 +37,10 @@ const createInstance = () => {
 }
 
 
-export const addUser = (data: UserServiceType) => {
+export const addVideoUser = (data: UserServiceType) => {
   return createInstance().post('/add/video', data);
+}
+
+export const addBookUser = (data: UserServiceType) => {
+  return createInstance().post('/add/book', data);
 }

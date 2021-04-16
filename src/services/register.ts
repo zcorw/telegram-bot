@@ -26,7 +26,7 @@ const createInstance = () => {
 
 
 
-export const register = (adminName, adminPassw, userName) => {
+export const registerVideo = (adminName, adminPassw, userName) => {
   return createInstance().get('/video/login', {
     params: {
       username: adminName,
@@ -41,4 +41,12 @@ export const register = (adminName, adminPassw, userName) => {
         }
       })
     })
+}
+
+export const registerBook = (userName) => {
+  return createInstance().get('/book/register', {
+    params: {
+      username: userName,
+    }
+  })
 }
